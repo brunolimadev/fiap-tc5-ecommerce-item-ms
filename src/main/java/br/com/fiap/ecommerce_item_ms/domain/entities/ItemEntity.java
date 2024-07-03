@@ -1,10 +1,11 @@
-package br.com.fiap.ecommerce_item_ms;
+package br.com.fiap.ecommerce_item_ms.domain.entities;
 
+import br.com.fiap.ecommerce_item_ms.domain.exception.EntityException;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
-import static br.com.fiap.ecommerce_item_ms.MessageEnumUtils.ENTITY_EXCEPTION;
+import static br.com.fiap.ecommerce_item_ms.utils.MessageEnumUtils.ENTITY_EXCEPTION;
 
 @Getter
 @Setter

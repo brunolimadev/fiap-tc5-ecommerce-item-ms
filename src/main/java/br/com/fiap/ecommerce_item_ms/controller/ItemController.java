@@ -1,5 +1,8 @@
-package br.com.fiap.ecommerce_item_ms;
+package br.com.fiap.ecommerce_item_ms.controller;
 
+import br.com.fiap.ecommerce_item_ms.domain.entities.ItemEntity;
+import br.com.fiap.ecommerce_item_ms.ports.exception.OutputPortException;
+import br.com.fiap.ecommerce_item_ms.ports.outputport.ItemManagementOutputPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +26,7 @@ public class ItemController {
   @PostMapping
   public ResponseEntity<ItemEntity> processProducts(
           @RequestBody ItemEntity itemEntity
-  ) throws UseCaseException {
+  ) throws OutputPortException {
 
     return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -32,7 +35,7 @@ public class ItemController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ItemEntity>> getAllProducts() {
+  public ResponseEntity<List<ItemEntity>> getAllProducts() throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
@@ -41,7 +44,7 @@ public class ItemController {
   }
 
   @GetMapping(value = "{item_id}")
-  public ResponseEntity<ItemEntity> getProduct(@PathVariable("item_id") Long id) {
+  public ResponseEntity<ItemEntity> getProduct(@PathVariable("item_id") Long id) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
@@ -50,7 +53,7 @@ public class ItemController {
   }
 
   @DeleteMapping(value = "{item_id}")
-  public ResponseEntity<ItemEntity> removeProduct(@PathVariable("item_id") Long id) {
+  public ResponseEntity<ItemEntity> removeProduct(@PathVariable("item_id") Long id) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
@@ -62,7 +65,7 @@ public class ItemController {
   public ResponseEntity<ItemEntity> updateProduct(
           @PathVariable("item_id") Long id,
           @RequestBody ItemEntity itemEntity
-  ) {
+  ) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)

@@ -1,4 +1,4 @@
-package br.com.fiap.ecommerce_item_ms;
+package br.com.fiap.ecommerce_item_ms.ports.exception;
 
 public class OutputPortException extends  RuntimeException {
 

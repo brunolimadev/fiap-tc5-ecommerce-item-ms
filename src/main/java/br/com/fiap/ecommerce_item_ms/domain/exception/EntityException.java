@@ -1,4 +1,4 @@
-package br.com.fiap.ecommerce_item_ms;
+package br.com.fiap.ecommerce_item_ms.domain.exception;
 
 public class EntityException extends RuntimeException {
 
