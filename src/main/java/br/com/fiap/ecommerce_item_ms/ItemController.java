@@ -26,7 +26,7 @@ public class ItemController {
   ) throws UseCaseException {
 
     return ResponseEntity
-            .status(HttpStatus.OK)
+            .status(HttpStatus.CREATED)
             .body(itemManagementOutputPort.createItem(itemEntity));
 
   }

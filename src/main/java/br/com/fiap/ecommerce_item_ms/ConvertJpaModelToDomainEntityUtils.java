@@ -7,8 +7,6 @@ public class ConvertJpaModelToDomainEntityUtils {
 
   public static ItemEntity convert(ItemModel itemModel) {
 
-
-
     return ItemEntity
             .builder()
             .id(itemModel.getId())

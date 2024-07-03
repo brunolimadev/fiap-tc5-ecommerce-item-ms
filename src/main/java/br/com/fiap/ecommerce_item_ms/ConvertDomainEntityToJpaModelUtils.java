@@ -9,8 +9,6 @@ public class ConvertDomainEntityToJpaModelUtils {
 
   public static ItemModel convert(ItemEntity itemEntity) {
 
-
-
     return ItemModel
             .builder()
             .id(itemEntity.getId())
