@@ -1,19 +1,21 @@
-package br.com.fiap.ecommerce_item_ms;
+package br.com.fiap.ecommerce_item_ms.controller;
 
+import br.com.fiap.ecommerce_item_ms.domain.entities.MessageEntity;
+import br.com.fiap.ecommerce_item_ms.ports.exception.OutputPortException;
+import br.com.fiap.ecommerce_item_ms.domain.exception.EntityException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import static br.com.fiap.ecommerce_item_ms.MessageEnumUtils.*;
+import static br.com.fiap.ecommerce_item_ms.utils.MessageEnumUtils.*;
 
 @ControllerAdvice
 public class ItemControllerAdvice {
 
   @ExceptionHandler(
           {
-                  EntityException.class,
-                  UseCaseException.class,
+                  EntityException.class
           }
   )
   public ResponseEntity<MessageEntity> handleBadRequestWithDomainException(RuntimeException exception) {
@@ -51,7 +53,6 @@ public class ItemControllerAdvice {
 
   @ExceptionHandler(
           {
-                  InputPortException.class,
                   OutputPortException.class
           }
   )

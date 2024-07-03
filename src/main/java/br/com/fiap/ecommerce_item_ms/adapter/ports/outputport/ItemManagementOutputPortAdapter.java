@@ -1,9 +1,17 @@
-package br.com.fiap.ecommerce_item_ms;
+package br.com.fiap.ecommerce_item_ms.adapter.ports.outputport;
+
+import br.com.fiap.ecommerce_item_ms.adapter.repositories.ItemRepository;
+import br.com.fiap.ecommerce_item_ms.domain.entities.ItemEntity;
+import br.com.fiap.ecommerce_item_ms.domain.exception.EntityException;
+import br.com.fiap.ecommerce_item_ms.ports.outputport.ItemManagementOutputPort;
+import br.com.fiap.ecommerce_item_ms.ports.exception.OutputPortException;
+import br.com.fiap.ecommerce_item_ms.utils.ConvertDomainEntityToJpaModelUtils;
+import br.com.fiap.ecommerce_item_ms.utils.ConvertJpaModelToDomainEntityUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static br.com.fiap.ecommerce_item_ms.MessageEnumUtils.*;
+import static br.com.fiap.ecommerce_item_ms.utils.MessageEnumUtils.*;
 
 public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort {
 

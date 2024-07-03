@@ -1,4 +1,7 @@
-package br.com.fiap.ecommerce_item_ms;
+package br.com.fiap.ecommerce_item_ms.ports.outputport;
+
+import br.com.fiap.ecommerce_item_ms.domain.entities.ItemEntity;
+import br.com.fiap.ecommerce_item_ms.ports.exception.OutputPortException;
 
 import java.util.List;
 

@@ -1,5 +1,7 @@
-package br.com.fiap.ecommerce_item_ms;
+package br.com.fiap.ecommerce_item_ms.utils;
 
+import br.com.fiap.ecommerce_item_ms.domain.entities.ItemEntity;
+import br.com.fiap.ecommerce_item_ms.adapter.repositories.model.ItemModel;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
