@@ -20,9 +20,17 @@ public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort
 
     try {
 
+      var item = ConvertDomainEntityToJpaModelUtils.convert(itemEntity);
+
+      item.setId(null);
+
       return ConvertJpaModelToDomainEntityUtils.convert(
-              itemRepository.save(ConvertDomainEntityToJpaModelUtils.convert(itemEntity))
+              itemRepository.save(item)
       );
+
+    } catch (EntityException entityException) {
+
+      throw entityException;
 
     } catch (Exception exception) {
 
@@ -70,11 +78,11 @@ public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort
 
     try {
 
-      var product = itemRepository.findById(id).orElseThrow();
+      var item = itemRepository.findById(id).orElseThrow();
 
-      itemRepository.deleteById(product.getId());
+      itemRepository.deleteById(item.getId());
 
-      return ConvertJpaModelToDomainEntityUtils.convert(product);
+      return ConvertJpaModelToDomainEntityUtils.convert(item);
 
     } catch (Exception exception) {
 
@@ -89,14 +97,14 @@ public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort
 
     try {
 
-      var product = itemRepository.findById(id).orElseThrow();
+      var item = itemRepository.findById(id).orElseThrow();
 
-      product.setDescription(itemEntity.getDescription());
-      product.setPrice(itemEntity.getPrice());
-      product.setStoreQuantity(itemEntity.getStoreQuantity());
-      product.setUpdateDateTime(LocalDateTime.now());
+      item.setDescription(itemEntity.getDescription());
+      item.setPrice(itemEntity.getPrice());
+      item.setStoreQuantity(itemEntity.getStoreQuantity());
+      item.setUpdateDateTime(LocalDateTime.now());
 
-      return ConvertJpaModelToDomainEntityUtils.convert(itemRepository.save(product));
+      return ConvertJpaModelToDomainEntityUtils.convert(itemRepository.save(item));
 
     } catch (Exception exception) {
 

@@ -22,10 +22,10 @@ public class ItemModel {
   private String description;
 
   @Column(name = "price")
-  private String price;
+  private Double price;
 
   @Column(name = "store_quantity")
-  private String storeQuantity;
+  private Integer storeQuantity;
 
   @Column(name = "create_datetime")
   private LocalDateTime createDateTime;
