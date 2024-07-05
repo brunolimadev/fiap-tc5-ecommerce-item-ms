@@ -24,7 +24,7 @@ public class ItemController {
   }
 
   @PostMapping
-  public ResponseEntity<ItemEntity> processProducts(
+  public ResponseEntity<ItemEntity> createItem(
           @RequestBody ItemEntity itemEntity
   ) throws OutputPortException {
 
@@ -35,7 +35,7 @@ public class ItemController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ItemEntity>> getAllProducts() throws OutputPortException {
+  public ResponseEntity<List<ItemEntity>> getAllItems() throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
@@ -44,7 +44,7 @@ public class ItemController {
   }
 
   @GetMapping(value = "{item_id}")
-  public ResponseEntity<ItemEntity> getProduct(@PathVariable("item_id") Long id) throws OutputPortException {
+  public ResponseEntity<ItemEntity> getItem(@PathVariable("item_id") Long id) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
@@ -53,7 +53,7 @@ public class ItemController {
   }
 
   @DeleteMapping(value = "{item_id}")
-  public ResponseEntity<ItemEntity> removeProduct(@PathVariable("item_id") Long id) throws OutputPortException {
+  public ResponseEntity<ItemEntity> removeItem(@PathVariable("item_id") Long id) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
@@ -62,7 +62,7 @@ public class ItemController {
   }
 
   @PutMapping(value = "/{item_id}")
-  public ResponseEntity<ItemEntity> updateProduct(
+  public ResponseEntity<ItemEntity> updateItem(
           @PathVariable("item_id") Long id,
           @RequestBody ItemEntity itemEntity
   ) throws OutputPortException {
