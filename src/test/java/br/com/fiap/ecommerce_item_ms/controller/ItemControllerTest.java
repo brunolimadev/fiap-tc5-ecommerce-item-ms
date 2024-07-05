@@ -137,8 +137,6 @@ class ItemControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
-    System.out.println(response.toString());
-
     //Assert
     response
             .andExpect(MockMvcResultMatchers.status().isOk());
