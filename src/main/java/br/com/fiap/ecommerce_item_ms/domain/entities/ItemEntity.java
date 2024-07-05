@@ -8,9 +8,7 @@ import java.time.LocalDateTime;
 import static br.com.fiap.ecommerce_item_ms.utils.MessageEnumUtils.ENTITY_EXCEPTION;
 
 @Getter
-@Setter
 @Builder
-@NoArgsConstructor
 public class ItemEntity {
 
   private Long id;
