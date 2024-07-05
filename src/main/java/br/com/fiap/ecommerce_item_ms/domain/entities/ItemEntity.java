@@ -1,6 +1,7 @@
 package br.com.fiap.ecommerce_item_ms.domain.entities;
 
 import br.com.fiap.ecommerce_item_ms.domain.exception.EntityException;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import static br.com.fiap.ecommerce_item_ms.utils.MessageEnumUtils.ENTITY_EXCEPT
 @Builder
 public class ItemEntity {
 
+  @Hidden
   private Long id;
   private String description;
   private Double price;

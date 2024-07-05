@@ -1,5 +1,7 @@
 server:
-  port: 8080
+  port: 8082
+  servlet:
+    context-path: /api/v1/ecommerce-management
 spring:
   application:
     name: ecommerce-item-ms
