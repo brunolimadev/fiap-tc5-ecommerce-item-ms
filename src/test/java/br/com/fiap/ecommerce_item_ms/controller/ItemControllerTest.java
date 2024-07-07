@@ -8,7 +8,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,7 +20,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -56,7 +54,7 @@ class ItemControllerTest {
     given(itemManagementOutputPort.createItem(any())).willAnswer(invocation -> invocation.getArgument(0));
 
     //Act
-    var response = mockMvc.perform(post("http://localhost:8080/items")
+    var response = mockMvc.perform(post("http://localhost:8082/items")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
@@ -75,7 +73,7 @@ class ItemControllerTest {
     when(itemManagementOutputPort.getItems()).thenReturn(items);
 
     //Act
-    var response = mockMvc.perform(get("http://localhost:8080/items")
+    var response = mockMvc.perform(get("http://localhost:8082/items")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
@@ -94,7 +92,7 @@ class ItemControllerTest {
     when(itemManagementOutputPort.getItem(itemId)).thenReturn(itemEntity);
 
     //Act
-    var response = mockMvc.perform(get("http://localhost:8080/items/1")
+    var response = mockMvc.perform(get("http://localhost:8082/items/1")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
@@ -113,7 +111,7 @@ class ItemControllerTest {
     when(itemManagementOutputPort.removeItem(itemId)).thenReturn(itemEntity);
 
     //Act
-    var response = mockMvc.perform(delete("http://localhost:8080/items/1")
+    var response = mockMvc.perform(delete("http://localhost:8082/items/1")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
@@ -132,7 +130,7 @@ class ItemControllerTest {
     when(itemManagementOutputPort.updateItem(itemId, itemEntity)).thenReturn(itemEntity);
 
     //Act
-    var response = mockMvc.perform(put("http://localhost:8080/items/1")
+    var response = mockMvc.perform(put("http://localhost:8082/items/1")
             .param("item_id", String.valueOf(itemId))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));

@@ -17,7 +17,9 @@ public class ItemEntity {
   private String description;
   private Double price;
   private Integer storeQuantity;
+  @Hidden
   private LocalDateTime createDateTime;
+  @Hidden
   private LocalDateTime updateDateTime;
 
   public ItemEntity(

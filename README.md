@@ -44,7 +44,7 @@
 - [Draw.io](https://app.diagrams.net/)
 
 ## 📋 Swagger
-- http://localhost:8082/api/v1/ecommerce-management/swagger-ui/index.html#/
+- http://localhost:8082/ecommerce-management/api/v1/swagger-ui/index.html#/
 
 ## 😎 Collection
 - [fiap-ecommerce-items.postman_collection.zip](https://github.com/brunolimadev/fiap-tc5-ecommerce-item-ms/blob/develop/api-test-files/fiap-ecommerce-items.postman_collection.zip?raw=true)
