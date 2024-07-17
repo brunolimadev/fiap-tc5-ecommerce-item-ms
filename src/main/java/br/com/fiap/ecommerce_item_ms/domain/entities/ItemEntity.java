@@ -51,7 +51,7 @@ public class ItemEntity {
     }
 
     if (
-            description.isEmpty() || price <= 0 || storeQuantity <= 0
+            description.isEmpty() || price <= 0 || storeQuantity < 0
     ) {
 
       throw new EntityException(ENTITY_EXCEPTION.getMessage());

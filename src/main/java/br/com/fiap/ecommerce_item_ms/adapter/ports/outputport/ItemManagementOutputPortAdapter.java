@@ -5,6 +5,7 @@ import br.com.fiap.ecommerce_item_ms.domain.entities.ItemEntity;
 import br.com.fiap.ecommerce_item_ms.domain.exception.EntityException;
 import br.com.fiap.ecommerce_item_ms.ports.outputport.ItemManagementOutputPort;
 import br.com.fiap.ecommerce_item_ms.ports.exception.OutputPortException;
+import br.com.fiap.ecommerce_item_ms.ports.outputport.SessionManagementOutputPort;
 import br.com.fiap.ecommerce_item_ms.utils.ConvertDomainEntityToJpaModelUtils;
 import br.com.fiap.ecommerce_item_ms.utils.ConvertJpaModelToDomainEntityUtils;
 
@@ -16,17 +17,23 @@ import static br.com.fiap.ecommerce_item_ms.utils.MessageEnumUtils.*;
 public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort {
 
   private final ItemRepository itemRepository;
+  private final SessionManagementOutputPort sessionManagementOutputPort;
 
-  public ItemManagementOutputPortAdapter(ItemRepository itemRepository) {
+  public ItemManagementOutputPortAdapter(
+          ItemRepository itemRepository,
+          SessionManagementOutputPort sessionManagementOutputPort) {
 
     this.itemRepository = itemRepository;
+    this.sessionManagementOutputPort = sessionManagementOutputPort;
 
   }
 
   @Override
-  public ItemEntity createItem(ItemEntity itemEntity) throws OutputPortException {
+  public ItemEntity createItem(ItemEntity itemEntity, String sessionId) throws OutputPortException {
 
     try {
+
+      validateActiveSession(sessionManagementOutputPort.getSession(sessionId));
 
       var item = ConvertDomainEntityToJpaModelUtils.convert(itemEntity);
 
@@ -49,9 +56,11 @@ public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort
   }
 
   @Override
-  public List<ItemEntity> getItems() throws OutputPortException {
+  public List<ItemEntity> getItems(String sessionId) throws OutputPortException {
 
     try {
+
+      validateActiveSession(sessionManagementOutputPort.getSession(sessionId));
 
       return itemRepository.findAll()
               .stream()
@@ -67,9 +76,11 @@ public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort
   }
 
   @Override
-  public ItemEntity getItem(Long id) throws OutputPortException {
+  public ItemEntity getItem(Long id, String sessionId) throws OutputPortException {
 
     try {
+
+      validateActiveSession(sessionManagementOutputPort.getSession(sessionId));
 
       return ConvertJpaModelToDomainEntityUtils.convert(itemRepository.findById(id).orElseThrow());
 
@@ -82,9 +93,11 @@ public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort
   }
 
   @Override
-  public ItemEntity removeItem(Long id) throws OutputPortException {
+  public ItemEntity removeItem(Long id, String sessionId) throws OutputPortException {
 
     try {
+
+      validateActiveSession(sessionManagementOutputPort.getSession(sessionId));
 
       var item = itemRepository.findById(id).orElseThrow();
 
@@ -101,9 +114,11 @@ public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort
   }
 
   @Override
-  public ItemEntity updateItem(Long id, ItemEntity itemEntity) throws OutputPortException {
+  public ItemEntity updateItem(Long id, ItemEntity itemEntity, String sessionId) throws OutputPortException {
 
     try {
+
+      validateActiveSession(sessionManagementOutputPort.getSession(sessionId));
 
       var item = itemRepository.findById(id).orElseThrow();
 
@@ -117,6 +132,16 @@ public class ItemManagementOutputPortAdapter implements ItemManagementOutputPort
     } catch (Exception exception) {
 
       throw new OutputPortException(ITEM_MANAGEMENT_UPDATE_ITEM_OUTPUT_PORT_EXCEPTION.getMessage());
+
+    }
+
+  }
+
+  private void validateActiveSession(Object object) {
+
+    if (object == null) {
+
+      throw new OutputPortException("Usuario com sessao inativa");
 
     }
 

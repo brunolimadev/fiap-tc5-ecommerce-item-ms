@@ -8,6 +8,7 @@ import br.com.fiap.ecommerce_item_ms.mock.ItemEntityMock;
 import br.com.fiap.ecommerce_item_ms.mock.ItemModelMock;
 import br.com.fiap.ecommerce_item_ms.ports.exception.OutputPortException;
 import br.com.fiap.ecommerce_item_ms.ports.outputport.ItemManagementOutputPort;
+import br.com.fiap.ecommerce_item_ms.ports.outputport.SessionManagementOutputPort;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,9 @@ class ItemManagementOutputPortAdapterTest {
   @Mock
   private ItemRepository itemRepository;
 
+  @Mock
+  private SessionManagementOutputPort sessionManagementOutputPort;
+
   private ItemManagementOutputPort itemManagementOutputPort;
   private AutoCloseable openMocks;
 
@@ -36,7 +40,7 @@ class ItemManagementOutputPortAdapterTest {
   void setup() {
 
     openMocks = MockitoAnnotations.openMocks(this);
-    itemManagementOutputPort = new ItemManagementOutputPortAdapter(itemRepository);
+    itemManagementOutputPort = new ItemManagementOutputPortAdapter(itemRepository, sessionManagementOutputPort);
 
   }
 
@@ -56,7 +60,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.save(any(ItemModel.class))).thenReturn(itemModel);
 
     //Act
-    var response = itemManagementOutputPort.createItem(ItemEntityMock.get());
+    var response = itemManagementOutputPort.createItem(ItemEntityMock.get(), "");
 
     //Assert
     assertThat(response)
@@ -75,7 +79,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.save(any(ItemModel.class))).thenThrow(EntityException.class);
 
     //Act & Assert
-    assertThatThrownBy(() -> itemManagementOutputPort.createItem(itemEntity))
+    assertThatThrownBy(() -> itemManagementOutputPort.createItem(itemEntity, ""))
             .isInstanceOf(EntityException.class);
 
   }
@@ -88,7 +92,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.save(any(ItemModel.class))).thenThrow(OutputPortException.class);
 
     //Act & Assert
-    assertThatThrownBy(() -> itemManagementOutputPort.createItem(itemEntity))
+    assertThatThrownBy(() -> itemManagementOutputPort.createItem(itemEntity, ""))
             .isInstanceOf(OutputPortException.class)
             .hasMessage(ITEM_MANAGEMENT_CREATE_ITEMS_OUTPUT_PORT_EXCEPTION.getMessage());
 
@@ -102,7 +106,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.findAll()).thenReturn(itemModelList);
 
     //Act
-    var response = itemManagementOutputPort.getItems();
+    var response = itemManagementOutputPort.getItems("");
 
     //Assert
     assertThat(response)
@@ -120,7 +124,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.findAll()).thenThrow(RuntimeException.class);
 
     //Act & Assert
-    assertThatThrownBy(() -> itemManagementOutputPort.getItems())
+    assertThatThrownBy(() -> itemManagementOutputPort.getItems(""))
             .isInstanceOf(OutputPortException.class)
             .hasMessage(ITEM_MANAGEMENT_GET_ITEMS_OUTPUT_PORT_EXCEPTION.getMessage());
     verify(itemRepository, times(1)).findAll();
@@ -137,7 +141,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.findById(anyLong())).thenReturn(Optional.of(itemModel));
 
     //Act
-    var response = itemManagementOutputPort.getItem(itemEntityId);
+    var response = itemManagementOutputPort.getItem(itemEntityId, "");
 
     //Assert
     assertThat(response)
@@ -158,7 +162,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.findById(anyLong())).thenThrow(RuntimeException.class);
 
     //Act & Assert
-    assertThatThrownBy(() -> itemManagementOutputPort.getItem(itemEntityId))
+    assertThatThrownBy(() -> itemManagementOutputPort.getItem(itemEntityId, ""))
             .isInstanceOf(OutputPortException.class)
             .hasMessage(ITEM_MANAGEMENT_GET_ITEM_OUTPUT_PORT_EXCEPTION.getMessage());
     verify(itemRepository, times(1)).findById(anyLong());
@@ -176,7 +180,7 @@ class ItemManagementOutputPortAdapterTest {
     doNothing().when(itemRepository).deleteById(anyLong());
 
     //Act
-    var response = itemManagementOutputPort.removeItem(itemEntityId);
+    var response = itemManagementOutputPort.removeItem(itemEntityId, "");
 
     //Assert
     assertThat(response)
@@ -198,7 +202,7 @@ class ItemManagementOutputPortAdapterTest {
     doThrow(RuntimeException.class).when(itemRepository).deleteById(anyLong());
 
     //Act & Assert
-    assertThatThrownBy(() -> itemManagementOutputPort.removeItem(itemEntityId))
+    assertThatThrownBy(() -> itemManagementOutputPort.removeItem(itemEntityId, ""))
             .isInstanceOf(OutputPortException.class)
             .hasMessage(ITEM_MANAGEMENT_REMOVE_ITEM_OUTPUT_PORT_EXCEPTION.getMessage());
 
@@ -215,7 +219,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.save(any(ItemModel.class))).thenReturn(itemModel);
 
     //Act
-    var response = itemManagementOutputPort.updateItem(itemEntityId, ItemEntityMock.get());
+    var response = itemManagementOutputPort.updateItem(itemEntityId, ItemEntityMock.get(), "");
 
     //Assert
     assertThat(response)
@@ -237,7 +241,7 @@ class ItemManagementOutputPortAdapterTest {
     when(itemRepository.save(any(ItemModel.class))).thenThrow(RuntimeException.class);
 
     //Act & Assert
-    assertThatThrownBy(() -> itemManagementOutputPort.updateItem(itemEntityId, itemEntity))
+    assertThatThrownBy(() -> itemManagementOutputPort.updateItem(itemEntityId, itemEntity, ""))
             .isInstanceOf(OutputPortException.class)
             .hasMessage(ITEM_MANAGEMENT_UPDATE_ITEM_OUTPUT_PORT_EXCEPTION.getMessage());
 

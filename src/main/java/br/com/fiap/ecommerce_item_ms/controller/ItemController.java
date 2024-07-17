@@ -34,45 +34,52 @@ public class ItemController {
   )
   @PostMapping
   public ResponseEntity<ItemEntity> createItem(
-          @RequestBody ItemEntity itemEntity
+          @RequestBody ItemEntity itemEntity,
+          @RequestHeader("session-id") String sessionId
   ) throws OutputPortException {
 
     return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(itemManagementOutputPort.createItem(itemEntity));
+            .body(itemManagementOutputPort.createItem(itemEntity, sessionId));
 
   }
 
   @Operation(summary = "List all items")
   @ApiResponse(responseCode = "200", description = "Gets list of all items")
   @GetMapping
-  public ResponseEntity<List<ItemEntity>> getAllItems() throws OutputPortException {
+  public ResponseEntity<List<ItemEntity>> getAllItems(
+          @RequestHeader("session-id") String sessionId
+  ) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
-            .body(itemManagementOutputPort.getItems());
+            .body(itemManagementOutputPort.getItems(sessionId));
 
   }
 
   @Operation(summary = "Returns a item by id")
   @ApiResponse(responseCode = "200", description = "Gets a specific item")
   @GetMapping(value = "{item_id}")
-  public ResponseEntity<ItemEntity> getItem(@PathVariable("item_id") Long id) throws OutputPortException {
+  public ResponseEntity<ItemEntity> getItem(
+          @PathVariable("item_id") Long id,
+          @RequestHeader("session-id") String sessionId) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
-            .body(itemManagementOutputPort.getItem(id));
+            .body(itemManagementOutputPort.getItem(id, sessionId));
 
   }
 
   @Operation(summary = "Remove a item by id")
   @ApiResponse(responseCode = "200", description = "Returns a removed item")
   @DeleteMapping(value = "{item_id}")
-  public ResponseEntity<ItemEntity> removeItem(@PathVariable("item_id") Long id) throws OutputPortException {
+  public ResponseEntity<ItemEntity> removeItem(
+          @PathVariable("item_id") Long id,
+          @RequestHeader("session-id") String sessionId) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
-            .body(itemManagementOutputPort.removeItem(id));
+            .body(itemManagementOutputPort.removeItem(id, sessionId));
 
   }
 
@@ -81,12 +88,13 @@ public class ItemController {
   @PutMapping(value = "/{item_id}")
   public ResponseEntity<ItemEntity> updateItem(
           @PathVariable("item_id") Long id,
-          @RequestBody ItemEntity itemEntity
+          @RequestBody ItemEntity itemEntity,
+          @RequestHeader("session-id") String sessionId
   ) throws OutputPortException {
 
     return  ResponseEntity
             .status(HttpStatus.OK)
-            .body(itemManagementOutputPort.updateItem(id, itemEntity));
+            .body(itemManagementOutputPort.updateItem(id, itemEntity, sessionId));
 
   }
 
