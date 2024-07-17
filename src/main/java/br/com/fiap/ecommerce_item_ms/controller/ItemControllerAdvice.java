@@ -5,6 +5,7 @@ import br.com.fiap.ecommerce_item_ms.ports.exception.OutputPortException;
 import br.com.fiap.ecommerce_item_ms.domain.exception.EntityException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -35,9 +36,10 @@ public class ItemControllerAdvice {
   @ExceptionHandler(
           {
                   HttpMessageNotReadableException.class,
+                  MissingRequestHeaderException.class
           }
   )
-  public ResponseEntity<MessageEntity> handleBadRequestWithSpringException(RuntimeException exception) {
+  public ResponseEntity<MessageEntity> handleBadRequestWithSpringException(Exception exception) {
 
     return ResponseEntity
             .badRequest()
