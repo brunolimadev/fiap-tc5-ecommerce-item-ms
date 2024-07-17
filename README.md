@@ -48,7 +48,7 @@
 - http://localhost:8082/ecommerce-management/api/v1/swagger-ui/index.html#/
 
 ## 😎 Collection
-- [fiap-ecommerce-items.postman_collection.zip](https://github.com/brunolimadev/fiap-tc5-ecommerce-item-ms/blob/develop/api-test-files/fiap-ecommerce-items.postman_collection.zip?raw=true)
+- [fiap-ecommerce-items.postman_collection.zip](https://github.com/brunolimadev/fiap-tc5-ecommerce-item-ms/blob/7a6ec2311ccd4f857cef9eb7724720ce6d998216/api-test-files/fiap-ecommerce-items.postman_collection.zip?raw=true)
   - **Obs.:** para utilizar a coleção primeiro é preciso descompactar o arquivo e importá-lo no Postman
 
 ## ⭐ Squad
