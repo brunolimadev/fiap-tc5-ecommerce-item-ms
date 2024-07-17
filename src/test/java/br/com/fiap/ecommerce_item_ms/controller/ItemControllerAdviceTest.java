@@ -34,7 +34,7 @@ class ItemControllerAdviceTest {
     var exception = new HttpMessageNotReadableException("Error");
 
     //Act
-    var response = itemControllerAdvice.handleBadRequestWithSpringException(exception);
+    var response = itemControllerAdvice.handleBadRequestWithHttpMessageNotReadableException(exception);
 
     //Assert
     assertThat(response.getStatusCode())
