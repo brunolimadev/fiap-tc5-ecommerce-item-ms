@@ -31,6 +31,7 @@
 
 ## 🚀 Tecnologias Utilizadas
 - **Spring Boot:** versão 3.3.1
+- **Spring Webflux:** versão 3.1.2
 - **Java:** versão 17
 - **H2 database:** versão 2.2.224
 - **Springdoc-openapi-Swagger:** versão 2.5.0
