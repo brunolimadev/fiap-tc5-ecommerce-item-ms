@@ -57,7 +57,11 @@ class ItemManagementOutputPortAdapterTest {
     //Arrange
     var itemModel = ItemModelMock.get();
     var itemEntityId = 1L;
+    var sessionObject = new Object();
+
     when(itemRepository.save(any(ItemModel.class))).thenReturn(itemModel);
+
+    when(sessionManagementOutputPort.getSession(anyString())).thenReturn(sessionObject);
 
     //Act
     var response = itemManagementOutputPort.createItem(ItemEntityMock.get(), "");
@@ -76,7 +80,11 @@ class ItemManagementOutputPortAdapterTest {
 
     //Arrange
     var itemEntity = ItemEntityMock.get();
+    var sessionObject = new Object();
+
     when(itemRepository.save(any(ItemModel.class))).thenThrow(EntityException.class);
+
+    when(sessionManagementOutputPort.getSession(anyString())).thenReturn(sessionObject);
 
     //Act & Assert
     assertThatThrownBy(() -> itemManagementOutputPort.createItem(itemEntity, ""))
@@ -89,6 +97,7 @@ class ItemManagementOutputPortAdapterTest {
 
     //Arrange
     var itemEntity = ItemEntityMock.get();
+
     when(itemRepository.save(any(ItemModel.class))).thenThrow(OutputPortException.class);
 
     //Act & Assert
@@ -103,7 +112,11 @@ class ItemManagementOutputPortAdapterTest {
 
     //Arrange
     var itemModelList = ItemModelMock.getList();
+    var sessionObject = new Object();
+
     when(itemRepository.findAll()).thenReturn(itemModelList);
+
+    when(sessionManagementOutputPort.getSession(anyString())).thenReturn(sessionObject);
 
     //Act
     var response = itemManagementOutputPort.getItems("");
@@ -121,7 +134,11 @@ class ItemManagementOutputPortAdapterTest {
   void shouldThrowOutputPortExceptionTryingGetItems() {
 
     //Arrange
+    var sessionObject = new Object();
+
     when(itemRepository.findAll()).thenThrow(RuntimeException.class);
+
+    when(sessionManagementOutputPort.getSession(anyString())).thenReturn(sessionObject);
 
     //Act & Assert
     assertThatThrownBy(() -> itemManagementOutputPort.getItems(""))
@@ -138,7 +155,11 @@ class ItemManagementOutputPortAdapterTest {
     var itemModel = ItemModelMock.get();
     var itemEntity = ItemEntityMock.get();
     var itemEntityId = itemEntity.getId();
+    var sessionObject = new Object();
+
     when(itemRepository.findById(anyLong())).thenReturn(Optional.of(itemModel));
+
+    when(sessionManagementOutputPort.getSession(anyString())).thenReturn(sessionObject);
 
     //Act
     var response = itemManagementOutputPort.getItem(itemEntityId, "");
@@ -157,9 +178,13 @@ class ItemManagementOutputPortAdapterTest {
   void shouldThrowOutputPortExceptionTryingGetItem() {
 
     //Arrange
+    var sessionObject = new Object();
     var itemEntity = ItemEntityMock.get();
     var itemEntityId = itemEntity.getId();
+
     when(itemRepository.findById(anyLong())).thenThrow(RuntimeException.class);
+
+    when(sessionManagementOutputPort.getSession(anyString())).thenReturn(sessionObject);
 
     //Act & Assert
     assertThatThrownBy(() -> itemManagementOutputPort.getItem(itemEntityId, ""))
@@ -173,11 +198,16 @@ class ItemManagementOutputPortAdapterTest {
   void shouldRemoveItemWithSuccess() {
 
     //Arrange
+    var sessionObject = new Object();
     var itemModel = ItemModelMock.get();
     var itemEntity = ItemEntityMock.get();
     var itemEntityId = itemEntity.getId();
+
     when(itemRepository.findById(anyLong())).thenReturn(Optional.of(itemModel));
+
     doNothing().when(itemRepository).deleteById(anyLong());
+
+    when(sessionManagementOutputPort.getSession(anyString())).thenReturn(sessionObject);
 
     //Act
     var response = itemManagementOutputPort.removeItem(itemEntityId, "");
@@ -198,7 +228,9 @@ class ItemManagementOutputPortAdapterTest {
     var itemModel = ItemModelMock.get();
     var itemEntity = ItemEntityMock.get();
     var itemEntityId = itemEntity.getId();
+
     when(itemRepository.findById(anyLong())).thenReturn(Optional.of(itemModel));
+
     doThrow(RuntimeException.class).when(itemRepository).deleteById(anyLong());
 
     //Act & Assert
@@ -212,11 +244,16 @@ class ItemManagementOutputPortAdapterTest {
   void shouldUpdateItemWithSuccess() {
 
     //Arrange
+    var sessionObject = new Object();
     var itemModel = ItemModelMock.get();
     var itemEntity = ItemEntityMock.get();
     var itemEntityId = itemEntity.getId();
+
     when(itemRepository.findById(anyLong())).thenReturn(Optional.of(itemModel));
+
     when(itemRepository.save(any(ItemModel.class))).thenReturn(itemModel);
+
+    when(sessionManagementOutputPort.getSession(anyString())).thenReturn(sessionObject);
 
     //Act
     var response = itemManagementOutputPort.updateItem(itemEntityId, ItemEntityMock.get(), "");
