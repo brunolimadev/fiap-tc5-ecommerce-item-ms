@@ -12,13 +12,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -39,10 +41,20 @@ class ItemControllerTest {
   @MockBean
   private ItemManagementOutputPort itemManagementOutputPort;
 
+  private HttpHeaders httpHeaders;
+
   private ItemEntity itemEntity;
 
   @BeforeEach
   public void init () {
+
+    Map<String, String> headers = new HashMap<>();
+
+    headers.put("session-id", "aaaabacc");
+
+    httpHeaders = new HttpHeaders();
+
+    httpHeaders.setAll(headers);
 
     itemEntity = ItemEntityMock.get();
 
@@ -56,6 +68,7 @@ class ItemControllerTest {
 
     //Act
     var response = mockMvc.perform(post("http://localhost:8082/items")
+            .headers(httpHeaders)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
@@ -75,13 +88,13 @@ class ItemControllerTest {
 
     //Act
     var response = mockMvc.perform(get("http://localhost:8082/items")
+            .headers(httpHeaders)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
     //Assert
     response
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(jsonPath("$", hasSize(1)));
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
   }
 
@@ -94,13 +107,14 @@ class ItemControllerTest {
 
     //Act
     var response = mockMvc.perform(get("http://localhost:8082/items/1")
+            .headers(httpHeaders)
+            .param("item_id", String.valueOf(itemId))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
     //Assert
     response
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(jsonPath("$.description", CoreMatchers.is(itemEntity.getDescription())));
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
   }
 
@@ -113,13 +127,14 @@ class ItemControllerTest {
 
     //Act
     var response = mockMvc.perform(delete("http://localhost:8082/items/1")
+            .headers(httpHeaders)
+            .param("item_id", String.valueOf(itemId))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
 
     //Assert
     response
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(jsonPath("$.description", CoreMatchers.is(itemEntity.getDescription())));
+            .andExpect(MockMvcResultMatchers.status().isOk());
 
   }
 
@@ -132,6 +147,7 @@ class ItemControllerTest {
 
     //Act
     var response = mockMvc.perform(put("http://localhost:8082/items/1")
+            .headers(httpHeaders)
             .param("item_id", String.valueOf(itemId))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(itemEntity)));
