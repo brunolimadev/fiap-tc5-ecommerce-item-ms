@@ -25,6 +25,10 @@
 ## 🚀 Sobre a Aplicação
 - **Desenvolvida utilizando boas práticas de “Clean code”, com arquitetura hexagonal aplicada**
 - **Cobertura de testes unitários**
+- **Deve ser acessada por meio do MS**
+  - **https://github.com/brunolimadev/fiap-tc5-ecommerce-orchestrator-ms**
+- **Realiza integração com o MS**
+  - **https://github.com/brunolimadev/fiap-tc5-ecommerce-session-ms**
 
 ## 🛠️ Repositório
 - #### https://github.com/brunolimadev/fiap-tc5-ecommerce-item-ms
