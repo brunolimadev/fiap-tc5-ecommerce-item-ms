@@ -22,3 +22,6 @@ spring:
       path: /h2-console
       settings.trace: true
       settings.web-allow-others: false
+application:
+  session:
+    host-url: ${SESSION_URL:http://localhost:8085}
