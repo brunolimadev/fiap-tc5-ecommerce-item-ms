@@ -13,7 +13,7 @@
 
 	<groupId>br.com.fiap</groupId>
 	<artifactId>ecommerce-item-ms</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>ecommerce-item-ms</name>
 	<description>Microservice responsible for managing e-commerce items.</description>
 	<url/>
